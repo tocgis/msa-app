@@ -1,0 +1,47 @@
+
+syntax = "proto3";
+
+package auth;
+option go_package = "./auth;auth";   //两个参数一个是生成地址，一个是包名
+
+//生成go文件命令： protoc --proto_path=. --go_out=plugins=grpc:. auth.proto
+
+//生成go文件命令： protoc --proto_path=. --go_out=plugins=grpc:. auth.proto
+// truss auth.proto
+service AuthService {
+    rpc Login (LoginRequest) returns (LoginResponse) {} // 登录
+    //  rpc Token (NoRequest) returns (OkResponse) {} // TOKEN 校验
+    rpc Auth (AuthRequest) returns (AuthResponse) {} // TOKEN 获取当前用户信息
+    //  rpc Refresh (NoRequest) returns (OkResponse) {} // 刷新TOKEN
+}
+
+message OkResponse {} // 无内容返回
+message NoRequest {} // 无参数请求
+
+message LoginRequest {
+    string name = 1;
+    string code = 2; // 密码或者验证码
+    int32 type = 3; // 默认为验证码登录数值为0，密码登录时为1
+}
+
+message LoginResponse {
+    string token =1;
+}
+
+message AuthRequest {
+    string token = 1;
+}
+
+message AuthResponse {
+    int32 code = 1;
+    string message = 2;
+    TokenInfo data = 3;
+}
+
+message TokenInfo {
+    int32 user_id = 1;
+    string name = 2;
+    string phone = 3;
+    int64 version = 4;
+    int64 exp = 5;
+}

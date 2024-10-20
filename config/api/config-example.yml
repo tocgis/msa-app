@@ -1,0 +1,30 @@
+# api config
+
+app:
+
+
+micro:
+  etcd: 'http://127.0.0.1:2379'
+
+database:
+  driver: mysql
+  dsn: dev:123456@tcp(127.0.0.1:3306)/tai_base?charset=utf8mb4&parseTime=True&loc=Local
+
+aliyun:
+  sms:
+    url: "http://dysmsapi.aliyuncs.com/"
+    accessKeyId: ""
+    accessKeySecret: ""
+    signName: ""
+    templateCode: ""
+
+
+session:
+  type: redis
+  redis: "10.10.10.33:6379"
+
+redis:
+  host: "10.10.10.33:6379"
+  pass: ""
+  systemDb: 9
+  sessionDb: 10

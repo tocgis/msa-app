@@ -1,0 +1,41 @@
+// protoc --proto_path=. --go_out=plugins=grpc:. socialite.proto
+syntax = "proto3";
+
+package socialite;
+option go_package = "./socialite;socialite";   //两个参数一个是生成地址，一个是包名
+
+
+service SocialiteService {
+//  rpc WxLogin (WxLoginRequest) returns (WxLoginResponse) {}
+//  rpc AppLogin (WxLoginRequest) returns (WxLoginResponse) {}
+  rpc WxJsLogin (WxJsLoginRequest) returns (WxJsLoginResponse) {}
+  rpc WxJsConfig (NoParam) returns (WxJsConfigResponse) {}
+
+}
+
+message OkResponse {} // 无内容返回
+message NoParam {} // 无参数请求
+
+message WxLoginRequest {
+}
+
+message WxLoginResponse {
+}
+
+message WxJsLoginRequest {
+  string code = 1; // js授权获得的 code
+}
+
+// WxJsLogin 微信登录
+message WxJsLoginResponse {
+  int32 is_login = 1;
+  string token = 2;
+}
+
+// WxJsConfig 微信基础jsSDK接口
+message WxJsConfigResponse {
+  string appid = 1;
+  int64 timestamp = 2;
+  string signature = 3;
+  string noncestr = 4;
+}

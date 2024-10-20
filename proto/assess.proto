@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package assess;
+option go_package = "./assess;assess";   //两个参数一个是生成地址，一个是包名
+
+import "apis.proto";
+
+
+//生成go文件命令： protoc --proto_path=. --go_out=plugins=grpc:. assess.proto
+
+service AssessService {
+
+  rpc InitScore(ScoreRequest) returns (OkResponse) {} // 计算初始身价
+  rpc ScoreInfo(ScoreRequest) returns (ScoreResponse) {} // 查询身价信息
+  rpc BasicSave(BasicInfoRequest) returns (OkResponse) {} // 保存基础信息
+  rpc EducationSave(EducationRequest) returns (OkResponse) {}
+  rpc WorkSave(WorkinfoRequest) returns (OkResponse) {}
+
+}
+
+message OkResponse {} // 无内容返回
+message NoRequest {} // 无参数请求
+
+message SimpleResponse {
+  int32 code = 1;
+  string message = 2;
+  map<string, apis.Pair> data = 3;
+}
+
+message ScoreRequest {
+  string phone = 1;
+  string user_id = 2;
+}
+
+message ScoreResponse {
+  string social_score = 1;
+  string post_score = 2;
+  string financial_score = 3;
+  string mobile = 4;
+  string id_card = 5;
+  string user_id = 6;
+}
+
+message BasicInfoRequest {
+  double income = 1;
+  int32 house_hold_id = 2; // 户口性质ID
+  string house_hold = 3;
+  int32 marriage_id = 4; // 婚姻状况 id
+  string marriage = 5;
+  int32 family_id = 6; // 家庭信息
+  string family = 7;
+  int32 political_id = 8;
+  string political = 9; // 政治面貌
+}
+
+message EducationRequest {
+  int32       educationLevelId = 1;//	int 	学历层次id
+  string      educationLevel = 2;// 	string 	学历层次
+  string      admissionTime = 3;//	date 	入学时间
+  string      graduationTime = 4;//	date 	毕业时间
+  string      schoolName = 5;// 	string 	学校名称
+  int32       professionId = 6;//	int 	专业id
+  string      profession = 7;//	string 	专业
+  int32       educationScienceId = 8;//	int 	学位id
+  string      educationScience = 9; //	string 	学位
+}
+
+message WorkinfoRequest {
+  int32 provinceId = 1;//	int 	省份id
+  string province = 2;//	string 	省份
+  int32 cityId = 3; // 	int 	城市id
+  string city = 4;//	string 	城市
+  string companyName = 5;//	string 	公司名称
+  string entryTime = 6;//	date 	入职时间
+  int32 positionId = 7;// 	int 	岗位类别id
+  string position = 8;//	string 	岗位类别
+}

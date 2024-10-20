@@ -1,0 +1,24 @@
+
+syntax = "proto3";
+
+package user;
+option go_package = "./user;user";   //两个参数一个是生成地址，一个是包名
+
+//生成go文件命令： protoc --proto_path=. --go_out=plugins=grpc:. user.proto
+
+service UserService {
+    rpc GetProfile (GetProfileRequest) returns (GetProfileResponse) {}
+}
+
+message GetProfileRequest {
+    int64 user_id = 1;
+}
+
+message GetProfileResponse {
+    int64 user_id = 1;
+    string name = 2;
+    string company = 3;
+    string title = 4;
+    repeated bytes feeds = 5;
+}
+
